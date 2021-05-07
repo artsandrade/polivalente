@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class alunosModel extends Model
 {
@@ -36,6 +37,10 @@ class alunosModel extends Model
     private $id_arquivo;
     private $aluno_id;
     private $caminho;
+    private $arquivo;
+
+    private $resposta_status;
+    private $resposta_mensagem;
 
     public function getId_aluno()
     {
@@ -361,15 +366,161 @@ class alunosModel extends Model
         return $this;
     }
 
-    public function alterar(){
-
+    public function getArquivo()
+    {
+        return $this->arquivo;
     }
 
-    public function cadastrar(){
+    public function setArquivo($arquivo)
+    {
+        $this->arquivo = $arquivo;
 
+        return $this;
     }
 
-    public function remover(){
-        
+    public function getResposta_status()
+    {
+        return $this->resposta_status;
+    }
+
+    public function setResposta_status($resposta_status)
+    {
+        $this->resposta_status = $resposta_status;
+
+        return $this;
+    }
+
+    public function getResposta_mensagem()
+    {
+        return $this->resposta_mensagem;
+    }
+
+    public function setResposta_mensagem($resposta_mensagem)
+    {
+        $this->resposta_mensagem = $resposta_mensagem;
+
+        return $this;
+    }
+
+    public function alterar()
+    {
+        $validacao_simade = DB::table('alunos')->where('codigo_simade', $this->getCodigo_simade());
+        if ($validacao_simade->get()->contains('id_aluno', $this->getId_aluno()) || $validacao_simade->count() <= 0) {
+            DB::table('alunos')->where('id_aluno', $this->getId_aluno())->update([
+                'nome' => $this->getNome(),
+                'codigo_simade' => $this->getCodigo_simade(),
+                'cpf' => $this->getCpf(),
+                'data_nascimento' => $this->getData_nascimento(),
+                'sexo' => $this->getSexo(),
+                'rg' => $this->getRg(),
+                'estado_emissor' => $this->getEstado_emissor(),
+                'orgao_emissor' => $this->getOrgao_emissor(),
+                'data_expedicao' => $this->getData_expedicao(),
+                'estado_nascimento' => $this->getEstado_nascimento(),
+                'cidade_nascimento' => $this->getCidade_nascimento(),
+                'telefone' => $this->getTelefone(),
+                'celular' => $this->getCelular(),
+                'telefone_adicional' => $this->getTelefone_adicional(),
+                'email' => $this->getEmail(),
+                'numero_arquivo' => $this->getNumero_arquivo(),
+                'armario' => $this->getArmario(),
+                'gaveta' => $this->getGaveta(),
+                'observacoes' => $this->getObservacoes(),
+                'data_modificacao' => $this->getData_modificacao(),
+                'usuario_modificacao' => $this->getUsuario_modificacao(),
+            ]);
+
+            if ($this->getArquivo()['error'][0] != 4) {
+                foreach ($this->getArquivo()['tmp_name'] as $key => $imagem) {
+                    $diretorio = storage_path('arquivos/');
+                    $ext = strtolower(substr($this->getArquivo()['name'][$key], -4));
+                    $nome = date('d_m_Y_H_i_s') . $key . $ext;
+                    $arquivo = $diretorio . $nome;
+                    DB::table('alunos_arquivos')->insert([
+                        'aluno_id' => $this->getId_aluno(),
+                        'caminho' => $nome,
+                        'data_criacao' => $this->getData_modificacao(),
+                        'usuario_criacao' => $this->getUsuario_modificacao(),
+                    ]);
+                    move_uploaded_file($this->getArquivo()['tmp_name'][$key], $arquivo);
+                }
+            }
+            $this->setResposta_status(true);
+            if ($this->getSexo() == 'masculino') {
+                $this->setResposta_mensagem('Aluno alterado com sucesso!');
+            } elseif ($this->getSexo() == 'feminino') {
+                $this->setResposta_mensagem('Aluna alterada com sucesso!');
+            } else {
+                $this->setResposta_mensagem('Aluno(a) alterado(a) com sucesso!');
+            }
+        } else {
+            $this->setResposta_status(false);
+            $this->setResposta_mensagem('Desculpe, mas já existe um aluno(a) com o código SIMADE: ' . $this->getCodigo_simade() . ' cadastrado!');
+        }
+    }
+
+    public function cadastrar()
+    {
+        $validacao_simade = DB::table('alunos')->where('codigo_simade', $this->getCodigo_simade())->count();
+        if ($validacao_simade <= 0) {
+            $this->setAluno_id(DB::table('alunos')->insertGetId([
+                'nome' => $this->getNome(),
+                'codigo_simade' => $this->getCodigo_simade(),
+                'cpf' => $this->getCpf(),
+                'data_nascimento' => $this->getData_nascimento(),
+                'sexo' => $this->getSexo(),
+                'rg' => $this->getRg(),
+                'estado_emissor' => $this->getEstado_emissor(),
+                'orgao_emissor' => $this->getOrgao_emissor(),
+                'data_expedicao' => $this->getData_expedicao(),
+                'estado_nascimento' => $this->getEstado_nascimento(),
+                'cidade_nascimento' => $this->getCidade_nascimento(),
+                'telefone' => $this->getTelefone(),
+                'celular' => $this->getCelular(),
+                'telefone_adicional' => $this->getTelefone_adicional(),
+                'email' => $this->getEmail(),
+                'numero_arquivo' => $this->getNumero_arquivo(),
+                'armario' => $this->getArmario(),
+                'gaveta' => $this->getGaveta(),
+                'observacoes' => $this->getObservacoes(),
+                'data_criacao' => $this->getData_criacao(),
+                'usuario_criacao' => $this->getUsuario_criacao(),
+            ]));
+
+            if ($this->getArquivo()['error'][0] != 4) {
+                foreach ($this->getArquivo()['tmp_name'] as $key => $imagem) {
+                    $diretorio = storage_path('arquivos/');
+                    $ext = strtolower(substr($this->getArquivo()['name'][$key], -4));
+                    $nome = date('d_m_Y_H_i_s') . $key . $ext;
+                    $arquivo = $diretorio . $nome;
+                    DB::table('alunos_arquivos')->insert([
+                        'aluno_id' => $this->getAluno_id(),
+                        'caminho' => $nome,
+                        'data_criacao' => $this->getData_criacao(),
+                        'usuario_criacao' => $this->getUsuario_criacao(),
+                    ]);
+                    move_uploaded_file($this->getArquivo()['tmp_name'][$key], $arquivo);
+                }
+            }
+            $this->setResposta_status(true);
+            if ($this->getSexo() == 'masculino') {
+                $this->setResposta_mensagem('Aluno cadastrado com sucesso!');
+            } elseif ($this->getSexo() == 'feminino') {
+                $this->setResposta_mensagem('Aluna cadastrada com sucesso!');
+            } else {
+                $this->setResposta_mensagem('Aluno(a) cadastrado(a) com sucesso!');
+            }
+        } else {
+            $this->setResposta_status(false);
+            $this->setResposta_mensagem('Desculpe, mas já existe um aluno(a) com o código SIMADE: ' . $this->getCodigo_simade() . ' cadastrado!');
+        }
+    }
+
+    public function remover()
+    {
+    }
+
+    public function remover_arquivo()
+    {
     }
 }

@@ -16,49 +16,33 @@
       <thead>
         <tr>
           <th class="table-plus datatable-nosort">Nome</th>
-          <th>E-mail</th>
-          <th>Tipo do usuário</th>
-          <th>Situação</th>
+          <th>Código SIMADE</th>
+          <th>Armário</th>
+          <th>Gaveta</th>
           <th class="datatable-nosort">Ações</th>
         </tr>
       </thead>
       <tbody>
+        @foreach($alunos as $aluno)
         <tr>
-          <td class="table-plus">Gloria F. Mead</td>
-          <td>25</td>
-          <td>Sagittarius</td>
-          <td>2829 Trainer Avenue Peoria, IL 61602 </td>
+          <td class="table-plus">{{$aluno->nome}}</td>
+          <td>{{$aluno->codigo_simade}}</td>
+          <td>{{$aluno->armario}}</td>
+          <td>{{$aluno->gaveta}}</td>
           <td>
             <div class="dropdown">
               <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                 <i class="dw dw-more"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> Visualizar</a>
-                <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Alterar</a>
-                <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Remover</a>
+                <a class="dropdown-item" href="{{route('alunos_visualizar_get')}}?id={{$aluno->id_aluno}}"><i class="dw dw-eye"></i> Visualizar</a>
+                <a class="dropdown-item" href="{{route('alunos_alterar_get')}}?id={{$aluno->id_aluno}}"><i class="dw dw-edit2"></i> Alterar</a>
+                <a class="dropdown-item" href="#" onclick="removerModal('{{$aluno->id_aluno}}', '{{$aluno->nome}}')"><i class="dw dw-delete-3"></i> Remover</a>
               </div>
             </div>
           </td>
         </tr>
-        <tr>
-          <td class="table-plus">Andrea J. Cagle</td>
-          <td>30</td>
-          <td>Gemini</td>
-          <td>1280 Prospect Valley Road Long Beach, CA 90802 </td>
-          <td>
-            <div class="dropdown">
-              <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                <i class="dw dw-more"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> Visualizar</a>
-                <a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Alterar</a>
-                <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Remover</a>
-              </div>
-            </div>
-          </td>
-        </tr>
+        @endforeach
       </tbody>
     </table>
   </div>

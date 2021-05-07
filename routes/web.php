@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\alunosController;
 use App\Http\Controllers\usuariosController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
@@ -32,7 +33,13 @@ Route::get('/logout', [usuariosController::class, 'logout'])->name('logout_post'
 
 Route::get('/redefinir-senha', function () {
     if (isset($_GET['codigo'])) {
-        return view('login.redefinir_senha2');
+        $recuperacao_senha = DB::table('usuarios_recuperacao_senha')->where('id_recuperacao', $_GET['codigo'])->count();
+        if ($recuperacao_senha > 0) {
+            $recuperacao_senha = DB::table('usuarios_recuperacao_senha')->where('id_recuperacao', $_GET['codigo'])->first();
+            return view('login.redefinir_senha2', compact('recuperacao_senha'));
+        } else {
+            return redirect()->route('redefinir_senha');
+        }
     } else {
         return view('login.redefinir_senha1');
     }
@@ -40,20 +47,58 @@ Route::get('/redefinir-senha', function () {
 
 Route::prefix('/alunos')->group(function () {
     Route::get('/', function () {
-        return view('alunos.alunos');
+        $alunos = DB::table('alunos')->get();
+        return view('alunos.alunos', compact('alunos'));
     })->name('alunos_get');
 
     Route::get('/alterar', function () {
-        return view('alunos.alterar');
+        if (isset($_GET['id'])) {
+            $aluno = DB::table('alunos')->where('id_aluno', $_GET['id'])->count();
+            if ($aluno > 0) {
+                $dados_aluno = DB::table('alunos')->where('id_aluno', $_GET['id'])->get();
+                $arquivos_aluno = DB::table('alunos_arquivos')->where('aluno_id', $_GET['id'])->get();
+                $usuarios = DB::table('usuarios')->get();
+                return view('alunos.alterar', compact('dados_aluno', 'arquivos_aluno', 'usuarios'));
+            } else {
+                return redirect()->route('alunos_get');
+            }
+        } else {
+            return redirect()->route('alunos_get');
+        }
     })->name('alunos_alterar_get');
+
+    Route::post('alterar', [alunosController::class, 'alterar'])->name('alunos_alterar_post');
+
+    Route::post('baixar_arquivo', [alunosController::class, 'baixar_arquivo'])->name('alunos_baixar_arquivo_post');
 
     Route::get('/cadastrar', function () {
         return view('alunos.cadastrar');
     })->name('alunos_cadastrar_get');
 
+    Route::post('cadastrar', [alunosController::class, 'cadastrar'])->name('alunos_cadastrar_post');
+
     Route::get('/visualizar', function () {
+        if (isset($_GET['id'])) {
+            $aluno = DB::table('alunos')->where('id_aluno', $_GET['id'])->count();
+            if ($aluno > 0) {
+                $dados_aluno = DB::table('alunos')->where('id_aluno', $_GET['id'])->get();
+                $arquivos_aluno = DB::table('alunos_arquivos')->where('aluno_id', $_GET['id'])->get();
+                $usuarios = DB::table('usuarios')->get();
+                return view('alunos.visualizar', compact('dados_aluno', 'arquivos_aluno', 'usuarios'));
+            } else {
+                return redirect()->route('alunos_get');
+            }
+        } else {
+            return redirect()->route('alunos_get');
+        }
         return view('alunos.visualizar');
     })->name('alunos_visualizar_get');
+
+    Route::post('remover', [alunosController::class, 'remover'])->name('alunos_remover_post');
+
+    Route::post('remover_arquivo', [alunosController::class, 'remover_arquivo'])->name('alunos_remover_arquivo_post');
+    
+    Route::post('remover_arquivo2', [alunosController::class, 'remover_arquivo2'])->name('alunos_remover_arquivo2_post');
 });
 
 Route::prefix('/perfil')->group(function () {
