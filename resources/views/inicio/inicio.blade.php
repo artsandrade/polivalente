@@ -20,6 +20,7 @@ Olá {{session('usuario_nome')}}, seja bem-vindo!
       </div>
     </div>
   </div>
+  @if(session('usuario_tipo')=='1')
   <div class="col-lg-3 col-md-6 col-sm-12 mb-30">
     <div class="card-box pd-30 height-100-p">
       <div class="progress-box text-center">
@@ -28,6 +29,7 @@ Olá {{session('usuario_nome')}}, seja bem-vindo!
       </div>
     </div>
   </div>
+  @endif
 </div>
 @stop
 

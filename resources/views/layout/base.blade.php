@@ -87,6 +87,7 @@
               <li><a href="{{route('alunos_get')}}">Visualizar</a></li>
             </ul>
           </li>
+          @if(session('usuario_nome')=='1')
           <li class="dropdown">
             <a href="javascript:;" class="dropdown-toggle">
               <span class="micon dw dw-user1"></span><span class="mtext">Usuários</span>
@@ -96,6 +97,7 @@
               <li><a href="{{route('usuarios_get')}}">Visualizar</a></li>
             </ul>
           </li>
+          @endif
         </ul>
       </div>
     </div>
