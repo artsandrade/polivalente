@@ -47,6 +47,9 @@
     </table>
   </div>
 </div>
+
+@csrf
+<div id="modal-remover"></div>
 @stop
 
 @section('importacao_css')
@@ -69,4 +72,6 @@
 <script src="{{asset('assets/src/plugins/datatables/js/vfs_fonts.js')}}"></script>
 <!-- Datatable Setting js -->
 <script src="{{asset('assets/vendors/scripts/datatable-setting.js')}}"></script>
+
+<script src="{{asset('assets/js/alunos.js')}}" defer></script>
 @stop

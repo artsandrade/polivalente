@@ -433,8 +433,8 @@ class alunosModel extends Model
             if ($this->getArquivo()['error'][0] != 4) {
                 foreach ($this->getArquivo()['tmp_name'] as $key => $imagem) {
                     $diretorio = storage_path('arquivos/');
-                    $ext = strtolower(substr($this->getArquivo()['name'][$key], -4));
-                    $nome = date('d_m_Y_H_i_s') . $key . $ext;
+                    $ext = pathinfo($this->getArquivo()['name'][$key], PATHINFO_EXTENSION);
+                    $nome = date('d_m_Y_H_i_s') . $key . '.' . $ext;
                     $arquivo = $diretorio . $nome;
                     DB::table('alunos_arquivos')->insert([
                         'aluno_id' => $this->getId_aluno(),
@@ -490,7 +490,7 @@ class alunosModel extends Model
             if ($this->getArquivo()['error'][0] != 4) {
                 foreach ($this->getArquivo()['tmp_name'] as $key => $imagem) {
                     $diretorio = storage_path('arquivos/');
-                    $ext = strtolower(substr($this->getArquivo()['name'][$key], -4));
+                    $ext = pathinfo($this->getArquivo()['name'][$key], PATHINFO_EXTENSION);
                     $nome = date('d_m_Y_H_i_s') . $key . $ext;
                     $arquivo = $diretorio . $nome;
                     DB::table('alunos_arquivos')->insert([
@@ -518,9 +518,23 @@ class alunosModel extends Model
 
     public function remover()
     {
+        $arquivos = DB::table('alunos_arquivos')->where('aluno_id', $this->getId_aluno());
+        if ($arquivos->count() > 0) {
+            foreach ($arquivos->get() as $arquivo) {
+                unlink(storage_path('arquivos/' . $arquivo->caminho));
+                DB::table('alunos_arquivos')->where('id_arquivo', $arquivo->id_arquivo)->delete();
+            }
+        }
+        DB::table('alunos')->where('id_aluno', $this->getId_aluno())->delete();
+        $this->setResposta_status(true);
+        $this->setResposta_mensagem('Aluno(a) removido(a) com sucesso!');
     }
 
     public function remover_arquivo()
     {
+        DB::table('alunos_arquivos')->where('id_arquivo', $this->getId_arquivo())->delete();
+        unlink(storage_path('arquivos/' . $this->getCaminho()));
+        $this->setResposta_status(true);
+        $this->setResposta_mensagem('Arquivo removido com sucesso!');
     }
 }

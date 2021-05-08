@@ -154,6 +154,7 @@ class alunosController extends Controller
     {
         $validacao = Validator::make($request->all(), [
             'id_arquivo' => 'required',
+            'caminho' => 'required',
         ]);
         if ($validacao->fails()) {
             return Response()->json([
@@ -163,6 +164,7 @@ class alunosController extends Controller
         } else {
             $aluno = new alunosModel();
             $aluno->setId_arquivo($request->id_arquivo);
+            $aluno->setCaminho($request->caminho);
             $aluno->remover_arquivo();
             return Response()->json([
                 'status' => $aluno->getResposta_status(),

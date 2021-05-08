@@ -210,6 +210,9 @@
   </div>
 </div>
 @endforeach
+
+@csrf
+<div id="modal-remover"></div>
 @stop
 
 @section('importacao_css')

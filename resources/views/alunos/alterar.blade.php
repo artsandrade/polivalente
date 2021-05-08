@@ -222,7 +222,7 @@
       <div class="col-md-12">
         <div class="form-group">
           <label for="arquivos">Insira os arquivos: </label>
-          <input id="arquivos" name="arquivos[]" type="file" class="file" accept=".jpeg, .jpg, .gif, .png, .JPEG, .JPG, .GIF, .PNG" multiple>
+          <input id="arquivos" name="arquivos[]" type="file" class="file" multiple>
         </div>
       </div>
     </div>
@@ -231,7 +231,7 @@
     <br>
     <div class="row">
       <div class="col-md-12">
-        <table class="data-table table stripe hover nowrap">
+        <table class="table stripe hover nowrap" id="tabela">
           <thead>
             <tr>
               <th class="table-plus">Arquivo</th>
@@ -279,6 +279,9 @@
   </form>
 </div>
 @endforeach
+
+@csrf
+<div id="modal-remover"></div>
 @stop
 
 @section('importacao_css')
