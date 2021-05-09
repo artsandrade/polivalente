@@ -6,6 +6,18 @@ if (document.getElementById('arquivos')) {
   });
 }
 
+var $cpf = $("#cpf");
+$cpf.mask('000.000.000-00');
+
+var $telefone = $("#telefone");
+$telefone.mask('(00) 0000-0000');
+
+var $celular = $("#celular");
+$celular.mask('(00) 00000-0000');
+
+var $telefone_adicional = $("#telefone_adicional");
+$telefone_adicional.mask('(00) 0000-0000');
+
 /* Preenchimento da lista de cidade (naturalidade) com base na UF (API IBGE) */
 $("select[name='estado_nascimento']").change(function () {
   if ($(this).val()) {
