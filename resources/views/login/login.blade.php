@@ -49,7 +49,7 @@
               @csrf
               <input type="hidden" id="url_form" name="url_form" value="{{route('login_post')}}">
               <div class="input-group custom">
-                <input type="text" class="form-control form-control-lg" id="email" name="email" placeholder="E-mail">
+                <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="E-mail">
                 <div class="input-group-append custom">
                   <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
                 </div>

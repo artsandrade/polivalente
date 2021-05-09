@@ -51,7 +51,7 @@
             <h6 class="mb-20">Preencha seu e-mail abaixo para receber um link para redefinir sua senha!</h6>
             <form>
               <div class="input-group custom">
-                <input type="text" class="form-control form-control-lg" placeholder="E-mail">
+                <input type="email" class="form-control form-control-lg" placeholder="E-mail">
                 <div class="input-group-append custom">
                   <span class="input-group-text"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
                 </div>

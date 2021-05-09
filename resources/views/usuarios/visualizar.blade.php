@@ -55,7 +55,7 @@
     <div class="col-sm-12">
       <div class="form-group">
         <a href="{{route('usuarios_get')}}" onclick="voltar()" class="btn btn-secondary">Voltar</a>
-        <a type="button" href="{{route('usuarios_alterar_get')}}?id={{$usuario->id_usuario}}" class="btn btn-primary" id="btn-cadastrar">Alterar</a>
+        <a href="{{route('usuarios_alterar_get')}}?id={{$usuario->id_usuario}}" class="btn btn-primary" id="btn-cadastrar">Alterar</a>
       </div>
     </div>
   </div>

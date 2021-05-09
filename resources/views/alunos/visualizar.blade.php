@@ -167,7 +167,7 @@
       <table class="data-table table stripe hover nowrap">
         <thead>
           <tr>
-            <th class="table-plus">Arquivo</th>
+            <th class="table-plus datatable-nosort">Arquivo</th>
             <th>Data inserção</th>
             <th>Inserido por</th>
             <th>Ações</th>
@@ -200,11 +200,12 @@
       </table>
     </div>
   </div>
+  <br>
   <div class="row text-right">
     <div class="col-sm-12">
       <div class="form-group">
         <a href="{{route('alunos_get')}}" onclick="voltar()" class="btn btn-secondary">Voltar</a>
-        <a type="button" href="{{route('alunos_alterar_get')}}?id={{$aluno->id_aluno}}" class="btn btn-primary" id="btn-cadastrar">Alterar</a>
+        <a href="{{route('alunos_alterar_get')}}?id={{$aluno->id_aluno}}" class="btn btn-primary" id="btn-cadastrar">Alterar</a>
       </div>
     </div>
   </div>

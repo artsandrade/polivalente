@@ -68,7 +68,7 @@
         <div class="form-group">
           <label for="estado_emissor">Estado emissor :</label>
           <select class="custom-select form-control" id="estado_emissor" name="estado_emissor">
-          <option value="">-- Selecionar --</option>
+            <option value="">-- Selecionar --</option>
             <option data-id="AC" value="Acre" {{$aluno->estado_emissor=='Acre'?'selected':''}}>Acre</option>
             <option data-id="AL" value="Alagoas" {{$aluno->estado_emissor=='Alagoas'?'selected':''}}>Alagoas</option>
             <option data-id="AP" value="Amapá" {{$aluno->estado_emissor=='Amapá'?'selected':''}}>Amapá</option>
@@ -226,15 +226,24 @@
         </div>
       </div>
     </div>
+    <small class="form-text text-muted">É necessário que os campos com <b>*</b> sejam preenchidos!</small>
+    <div class="row text-right">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <a href="{{route('alunos_get')}}" class="btn btn-secondary">Voltar</a>
+          <button type="submit" class="btn btn-primary" id="btn-alterar">Alterar</button>
+        </div>
+      </div>
+    </div>
     <hr>
     <h5>Documentos cadastrados</h5>
     <br>
     <div class="row">
       <div class="col-md-12">
-        <table class="table stripe hover nowrap" id="tabela">
+        <table class="data-table table stripe hover nowrap" id="tabela">
           <thead>
             <tr>
-              <th class="table-plus">Arquivo</th>
+              <th class="table-plus datatable-nosort">Arquivo</th>
               <th>Data inserção</th>
               <th>Inserido por</th>
               <th>Ações</th>
@@ -265,15 +274,6 @@
             @endforeach
           </tbody>
         </table>
-      </div>
-    </div>
-    <small class="form-text text-muted">É necessário que os campos com <b>*</b> sejam preenchidos!</small>
-    <div class="row text-right">
-      <div class="col-sm-12">
-        <div class="form-group">
-          <a href="{{route('alunos_get')}}" class="btn btn-secondary">Voltar</a>
-          <button type="submit" class="btn btn-primary" id="btn-alterar">Alterar</button>
-        </div>
       </div>
     </div>
   </form>
