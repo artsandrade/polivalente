@@ -43,3 +43,63 @@ $(document).ready(function () {
     });
   });
 });
+
+//Cadastrar usuário
+$(document).ready(function (e) {
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $('#form-cadastrar').submit(function (e) {
+    e.preventDefault();
+
+    var form = new FormData(this);
+
+    $('#btn-cadastrar').html('Solicitando...');
+    var url_atual = document.getElementById('url_form').value;
+    $.ajax({
+      url: "" + url_atual + "",
+      method: 'post',
+      data: form,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function (response) {
+
+        if (response.status === true) {
+          swal(
+            {
+              type: 'success',
+              title: 'Sucesso!',
+              text: response.mensagem,
+            }
+          )
+          document.getElementById('form-cadastrar').reset();
+          $('#btn-cadastrar').html('Solicitar');
+        }
+        else {
+          swal(
+            {
+              type: 'error',
+              title: 'Oops...',
+              text: response.mensagem,
+            }
+          )
+          $('#btn-cadastrar').html('Solicitar');
+        }
+      },
+      error: function (response) {
+        swal(
+          {
+            type: 'error',
+            title: 'Oops...',
+            text: response.responseJSON.message,
+          }
+        )
+        $('#btn-cadastrar').html('Solicitar');
+      }
+    });
+
+  });
+});

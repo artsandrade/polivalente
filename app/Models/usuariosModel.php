@@ -220,6 +220,49 @@ class usuariosModel extends Model
         }
     }
 
+    public function redefinir_senha1()
+    {
+        $validacao_email = DB::table('usuarios')->where('email', $this->getEmail())->count();
+        if ($validacao_email > 0) {
+            $codigo = mt_rand(9999999, 99999999);
+            $url = "http://" . $_SERVER["HTTP_HOST"] . "/redefinir-senha?email=" . $this->getEmail() . "&codigo=" . $codigo;
+            DB::table('usuarios_codigo')->insert([
+                'email' => $this->getEmail(),
+                'codigo' => $codigo
+            ]);
+
+            $headers = "MIME-Version: 1.1\r\n";
+            $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+            $headers .= "From: senha@poli.athur.dev.br\r\n"; // remetente
+            $headers .= "Return-Path: senha@poli.athur.dev.br\r\n"; // return-path
+            $text = "<html>
+                                <head>
+                                    <title>Redefinir senha</title>
+                                </head>
+                                <body>
+                                    <h3>Olá!</h3>
+                                    </br>
+                                    <h3>Você solicitou uma redefinição de senha no site Gestão Polivalente.</h3>
+                                    <h3>Clique <a href='$url'>aqui</a> para prosseguir! Assim, você será redirecionado ao site e criará uma nova senha para seu acesso ao painel.</h3>
+                                    </div>
+                                </body>
+                            </html>";
+            $envio = mail($this->getEmail(), "Redefinir senha - Gestão Polivalente", $text, $headers);
+
+            if ($envio) {
+                $this->setResposta_status(true);
+                $this->setResposta_mensagem('Por favor, verifique se o link de redefinição de senha foi encaminhado para o e-mail solicitado!');
+            }
+        } else {
+            $this->setResposta_status(false);
+            $this->setResposta_mensagem('Por favor, verifique se o e-mail digitado está correto!');
+        }
+    }
+
+    public function redefinir_senha2()
+    {
+    }
+
     public function remover()
     {
         $validacao_usuario = DB::table('alunos')->where('usuario_criacao', $this->getId_usuario())->orWhere('usuario_modificacao', $this->getId_usuario())->count();

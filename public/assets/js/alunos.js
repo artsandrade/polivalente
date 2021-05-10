@@ -187,68 +187,6 @@ $(document).ready(function (e) {
   });
 });
 
-function baixarArquivo(caminho) {
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-  var _token = document.getElementsByName('_token')[0].value;
-
-  $.ajax({
-    url: "/alunos/baixar_arquivo",
-    method: 'post',
-    data: {
-      '_token': _token,
-      'caminho': caminho
-    },
-    success: function (response) {
-      if (response.status === true) {
-        swal(
-          {
-            type: 'success',
-            title: 'Sucesso!',
-            text: response.mensagem,
-          }
-        )
-        var link = document.createElement('a');
-        link.setAttribute('href', '/tmp/' + caminho);
-        link.setAttribute('download', caminho);
-        link.click();
-        setTimeout(function () {
-          $.ajax({
-            url: "/alunos/remover_arquivo2",
-            method: 'post',
-            data: {
-              '_token': _token,
-              'caminho': caminho
-            },
-            success: function (response) { }
-          });
-        }, 3000);
-      }
-      else {
-        swal(
-          {
-            type: 'error',
-            title: 'Oops...',
-            text: response.mensagem,
-          }
-        )
-      }
-    },
-    error: function (data) {
-      swal(
-        {
-          type: 'error',
-          title: 'Oops...',
-          text: data.mensagem,
-        }
-      )
-    }
-  });
-}
-
 //Remover aluno
 function removerModal(id_aluno, nome) {
   document.getElementById('modal-remover').innerHTML = '\

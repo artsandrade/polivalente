@@ -40,6 +40,10 @@ Route::get('/redefinir-senha', function () {
     }
 })->name('redefinir_senha');
 
+Route::post('/redefinir-senha1', [usuariosController::class, 'redefinir_senha1'])->name('redefinir_senha1_post');
+
+Route::post('/redefinir-senha2', [usuariosController::class, 'redefinir_senha2'])->name('redefinir_senha2_post');
+
 Route::middleware(['autenticacao'])->group(function () {
 
     Route::middleware(['tipo_usuario'])->group(function () {
@@ -123,7 +127,7 @@ Route::middleware(['autenticacao'])->group(function () {
     
         Route::post('alterar', [alunosController::class, 'alterar'])->name('alunos_alterar_post');
     
-        Route::post('baixar_arquivo', [alunosController::class, 'baixar_arquivo'])->name('alunos_baixar_arquivo_post');
+        Route::get('baixar_arquivo', [alunosController::class, 'baixar_arquivo'])->name('alunos_baixar_arquivo_get');
     
         Route::get('/cadastrar', function () {
             return view('alunos.cadastrar');
@@ -150,9 +154,7 @@ Route::middleware(['autenticacao'])->group(function () {
     
         Route::post('remover', [alunosController::class, 'remover'])->name('alunos_remover_post');
     
-        Route::post('remover_arquivo', [alunosController::class, 'remover_arquivo'])->name('alunos_remover_arquivo_post');
-        
-        Route::post('remover_arquivo2', [alunosController::class, 'remover_arquivo2'])->name('alunos_remover_arquivo2_post');
+        Route::post('remover_arquivo', [alunosController::class, 'remover_arquivo'])->name('alunos_remover_arquivo_post');        
     });
     
     Route::prefix('/perfil')->group(function () {

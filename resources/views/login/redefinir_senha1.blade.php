@@ -49,9 +49,11 @@
               <h2 class="text-center text-primary">Redefinir senha</h2>
             </div>
             <h6 class="mb-20">Preencha seu e-mail abaixo para receber um link para redefinir sua senha!</h6>
-            <form>
+            <form method="POST" action="javascript:void(0)" id="form-cadastrar">
+              @csrf
+              <input type="hidden" id="url_form" name="url_form" value="{{route('redefinir_senha1_post')}}">
               <div class="input-group custom">
-                <input type="email" class="form-control form-control-lg" placeholder="E-mail">
+                <input type="email" class="form-control form-control-lg" name="email" placeholder="E-mail">
                 <div class="input-group-append custom">
                   <span class="input-group-text"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
                 </div>
@@ -67,7 +69,7 @@
                 </div>
                 <div class="col-5">
                   <div class="input-group mb-0">
-                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Solicitar">
+                    <button class="btn btn-primary btn-lg btn-block" id="btn-cadastrar">Solicitar</button>
                   </div>
                 </div>
               </div>
@@ -82,6 +84,9 @@
   <script src="{{asset('assets/vendors/scripts/script.min.js')}}"></script>
   <script src="{{asset('assets/vendors/scripts/process.js')}}"></script>
   <script src="{{asset('assets/vendors/scripts/layout-settings.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha512-YUkaLm+KJ5lQXDBdqBqk7EVhJAdxRnVdT2vtCzwPHSweCzyMgYV/tgGF4/dCyqtCC2eCphz0lRQgatGVdfR0ww==" crossorigin="anonymous"></script>
+  <script src="{{asset('assets/src/plugins/sweetalert2/sweetalert2.all.js')}}"></script>
+  <script src="{{asset('assets/js/login.js')}}" defer></script>
 </body>
 
 </html>

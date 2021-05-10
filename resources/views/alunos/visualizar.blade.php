@@ -189,7 +189,7 @@
                   <i class="dw dw-more"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                  <a class="dropdown-item" href="#" onclick="baixarArquivo('{{$arquivo->caminho}}')"><i class="dw dw-download"></i> Baixar</a>
+                  <a class="dropdown-item" href="{{route('alunos_baixar_arquivo_get')}}?caminho={{$arquivo->caminho}}"><i class="dw dw-download"></i> Baixar</a>
                   <a class="dropdown-item" href="#" onclick="removerArquivoModal('{{$arquivo->id_arquivo}}', '{{$arquivo->caminho}}')"><i class="dw dw-delete-3"></i> Remover</a>
                 </div>
               </div>

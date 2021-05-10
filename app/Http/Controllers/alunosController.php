@@ -72,11 +72,12 @@ class alunosController extends Controller
                 'mensagem' => 'É necessário selecionar um arquivo para realizar tal ação!'
             ]);
         } else {
-            File::copy(storage_path('arquivos/' . $request->caminho), public_path('tmp/' . $request->caminho));
-            return Response()->json([
-                'status' => true,
-                'mensagem' => 'O download do arquivo foi efetuado com sucesso!'
-            ]);
+            if (File::exists(storage_path('arquivos/' . $request->caminho))) {
+                return response()->download(storage_path('arquivos/' . $request->caminho));
+            }
+            else{
+                abort(403, 'Ops... parece que esse arquivo não existe mais!');
+            }
         }
     }
 
@@ -170,21 +171,6 @@ class alunosController extends Controller
                 'status' => $aluno->getResposta_status(),
                 'mensagem' => $aluno->getResposta_mensagem()
             ]);
-        }
-    }
-
-    public function remover_arquivo2(Request $request)
-    {
-        $validacao = Validator::make($request->all(), [
-            'caminho' => 'required',
-        ]);
-        if ($validacao->fails()) {
-            return Response()->json([
-                'status' => false,
-                'mensagem' => 'É necessário selecionar um arquivo para realizar tal ação!'
-            ]);
-        } else {
-            return Response()->download(public_path('tmp/' . $request->caminho))->deleteFileAfterSend();
         }
     }
 }

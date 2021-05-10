@@ -127,6 +127,46 @@ class usuariosController extends Controller
         }
     }
 
+    public function redefinir_senha1(Request $request){
+        $validacao = Validator::make($request->all(), [
+            'email' => 'required',
+        ]);
+        if ($validacao->fails()) {
+            return Response()->json([
+                'status' => false,
+                'mensagem' => 'Por favor, preencha os campos obrigatórios!'
+            ]);
+        } else {
+            $usuario = new usuariosModel();
+            $usuario->setEmail($request->email);
+            $usuario->redefinir_senha1();
+            return Response()->json([
+                'status' => $usuario->getResposta_status(),
+                'mensagem' => $usuario->getResposta_mensagem()
+            ]);
+        }
+    }
+
+    public function redefinir_senha2(Request $request){
+        $validacao = Validator::make($request->all(), [
+            'email' => 'required',
+        ]);
+        if ($validacao->fails()) {
+            return Response()->json([
+                'status' => false,
+                'mensagem' => 'Por favor, preencha os campos obrigatórios!'
+            ]);
+        } else {
+            $usuario = new usuariosModel();
+            $usuario->setEmail($request->email);
+            $usuario->redefinir_senha1();
+            return Response()->json([
+                'status' => $usuario->getResposta_status(),
+                'mensagem' => $usuario->getResposta_mensagem()
+            ]);
+        }
+    }
+
     public function remover(Request $request)
     {
         $validacao = Validator::make($request->all(), [
