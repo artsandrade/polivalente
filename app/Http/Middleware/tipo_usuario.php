@@ -17,7 +17,7 @@ class tipo_usuario
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Session::get('usuario_tipo_usuario')=='1'){
+        if(Session::get('usuario_tipo')=='1'){
             return $next($request);
         }
         else{
