@@ -81,6 +81,10 @@
   <script src="{{asset('assets/vendors/scripts/script.min.js')}}"></script>
   <script src="{{asset('assets/vendors/scripts/process.js')}}"></script>
   <script src="{{asset('assets/vendors/scripts/layout-settings.js')}}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha512-YUkaLm+KJ5lQXDBdqBqk7EVhJAdxRnVdT2vtCzwPHSweCzyMgYV/tgGF4/dCyqtCC2eCphz0lRQgatGVdfR0ww==" crossorigin="anonymous"></script>
+  <script src="{{asset('assets/src/plugins/sweetalert2/sweetalert2.all.js')}}"></script>
+  <script src="{{asset('assets/js/login.js')}}" defer></script>
 </body>
 
 </html>
