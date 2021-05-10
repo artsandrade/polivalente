@@ -49,9 +49,15 @@
               <h2 class="text-center text-primary">Redefinir senha</h2>
             </div>
             <h6 class="mb-20">Preencha o campo abaixo com sua nova senha!</h6>
-            <form>
+            @foreach($recuperacao_senha as $senha)
+            <form method="POST" action="javascript:void(0)" id="form-alterar">
+              @csrf
+              <input type="hidden" id="url_form" name="url_form" value="{{route('redefinir_senha2_post')}}">
+              <input type="email" name="id_codigo" id="id_codigo" value="{{$senha->id_codigo}}">
+              <input type="email" name="codigo" id="codigo" value="{{$senha->codigo}}">
+              <input type="email" name="email" id="email" value="{{$senha->email}}">
               <div class="input-group custom">
-                <input type="password" class="form-control form-control-lg" placeholder="Digite a nova senha">
+                <input type="password" class="form-control form-control-lg" name="senha" placeholder="Digite a nova senha">
                 <div class="input-group-append custom">
                   <span class="input-group-text"><i class="dw dw-padlock1" aria-hidden="true"></i></span>
                 </div>
@@ -59,11 +65,12 @@
               <div class="row align-items-center">
                 <div class="col-12">
                   <div class="input-group mb-0">
-                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Redefinir">
+                    <button class="btn btn-primary btn-lg btn-block" id="btn-alterar">Redefinir</button>
                   </div>
                 </div>
               </div>
             </form>
+            @endforeach
           </div>
         </div>
       </div>

@@ -28,9 +28,9 @@ Route::post('/login', [usuariosController::class, 'login'])->name('login_post');
 
 Route::get('/redefinir-senha', function () {
     if (isset($_GET['codigo'])) {
-        $recuperacao_senha = DB::table('usuarios_recuperacao_senha')->where('id_recuperacao', $_GET['codigo'])->count();
+        $recuperacao_senha = DB::table('usuarios_codigo')->where('codigo', $_GET['codigo'])->count();
         if ($recuperacao_senha > 0) {
-            $recuperacao_senha = DB::table('usuarios_recuperacao_senha')->where('id_recuperacao', $_GET['codigo'])->first();
+            $recuperacao_senha = DB::table('usuarios_codigo')->where('codigo', $_GET['codigo'])->first();
             return view('login.redefinir_senha2', compact('recuperacao_senha'));
         } else {
             return redirect()->route('redefinir_senha');

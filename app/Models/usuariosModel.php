@@ -261,6 +261,19 @@ class usuariosModel extends Model
 
     public function redefinir_senha2()
     {
+        $validacao_codigo = DB::table('usuarios_codigo')->where('id_codigo', $this->getId_usuario())->where('codigo', $this->getNome())->where('email', $this->getEmail())->count();
+        if ($validacao_codigo > 0) {
+            $codigo = DB::table('usuarios_codigo')->where('id_codigo', $this->getId_usuario())->where('codigo', $this->getNome())->where('email', $this->getEmail())->first();
+            DB::table('usuarios')->where('email', $codigo->email)->update([
+                'senha' => $this->getSenha()
+            ]);
+            DB::table('usuarios_codigo')->where('codigo', $this->getNome())->delete();
+            $this->setResposta_status(true);
+            $this->setResposta_mensagem('Senha alterada com sucesso! Sua autenticação deve ser realizada com a nova senha.');
+        } else {
+            $this->setResposta_status(false);
+            $this->setResposta_mensagem('Desculpe, mas o código não é mais válido. Faça uma nova solicitação para redefinir a senha!');
+        }
     }
 
     public function remover()

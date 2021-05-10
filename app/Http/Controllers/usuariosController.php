@@ -149,7 +149,10 @@ class usuariosController extends Controller
 
     public function redefinir_senha2(Request $request){
         $validacao = Validator::make($request->all(), [
+            'id_codigo' => 'required',
+            'codigo' => 'required',
             'email' => 'required',
+            'senha' => 'required',
         ]);
         if ($validacao->fails()) {
             return Response()->json([
@@ -158,8 +161,11 @@ class usuariosController extends Controller
             ]);
         } else {
             $usuario = new usuariosModel();
+            $usuario->setId_usuario($request->id_codigo);
+            $usuario->setNome($request->codigo);
             $usuario->setEmail($request->email);
-            $usuario->redefinir_senha1();
+            $usuario->setSenha($request->senha);
+            $usuario->redefinir_senha2();
             return Response()->json([
                 'status' => $usuario->getResposta_status(),
                 'mensagem' => $usuario->getResposta_mensagem()

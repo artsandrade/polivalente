@@ -103,3 +103,62 @@ $(document).ready(function (e) {
 
   });
 });
+
+//Alterar usuário
+$(document).ready(function (e) {
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $('#form-alterar').submit(function (e) {
+    e.preventDefault();
+
+    var form = new FormData(this);
+
+    $('#btn-alterar').html('Redefinindo...');
+    var url_atual = document.getElementById('url_form').value;
+    $.ajax({
+      url: "" + url_atual + "",
+      method: 'post',
+      data: form,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function (response) {
+
+        if (response.status === true) {
+          swal(
+            {
+              type: 'success',
+              title: 'Sucesso!',
+              text: response.mensagem,
+            }
+          )
+          $('#btn-alterar').html('Redefinir');
+        }
+        else {
+          swal(
+            {
+              type: 'error',
+              title: 'Oops...',
+              text: response.mensagem,
+            }
+          )
+          $('#btn-alterar').html('Redefinir');
+        }
+      },
+      error: function (response) {
+        swal(
+          {
+            type: 'error',
+            title: 'Oops...',
+            text: response.responseJSON.message,
+          }
+        )
+        $('#btn-alterar').html('Redefinir');
+      }
+    });
+
+  });
+});
