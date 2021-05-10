@@ -53,9 +53,9 @@
             <form method="POST" action="javascript:void(0)" id="form-alterar">
               @csrf
               <input type="hidden" id="url_form" name="url_form" value="{{route('redefinir_senha2_post')}}">
-              <input type="email" name="id_codigo" id="id_codigo" value="{{$senha->id_codigo}}">
-              <input type="email" name="codigo" id="codigo" value="{{$senha->codigo}}">
-              <input type="email" name="email" id="email" value="{{$senha->email}}">
+              <input type="hidden" name="id_codigo" id="id_codigo" value="{{$senha->id_codigo}}">
+              <input type="hidden" name="codigo" id="codigo" value="{{$senha->codigo}}">
+              <input type="hidden" name="email" id="email" value="{{$senha->email}}">
               <div class="input-group custom">
                 <input type="password" class="form-control form-control-lg" name="senha" placeholder="Digite a nova senha">
                 <div class="input-group-append custom">
