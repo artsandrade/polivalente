@@ -251,7 +251,7 @@ class usuariosModel extends Model
 
             if ($envio) {
                 $this->setResposta_status(true);
-                $this->setResposta_mensagem('Por favor, verifique se o link de redefinição de senha foi encaminhado para o e-mail solicitado!');
+                $this->setResposta_mensagem('Por favor, verifique se o link de redefinição de senha foi encaminhado para o e-mail solicitado! Caso não encontre na caixa de entrada, verifique a caixa de SPAM ou lixo eletrônico.');
             }
         } else {
             $this->setResposta_status(false);
