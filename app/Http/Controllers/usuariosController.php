@@ -164,7 +164,7 @@ class usuariosController extends Controller
             $usuario->setId_usuario($request->id_codigo);
             $usuario->setNome($request->codigo);
             $usuario->setEmail($request->email);
-            $usuario->setSenha($request->senha);
+            $usuario->setSenha(password_hash($request->senha, PASSWORD_DEFAULT));
             $usuario->redefinir_senha2();
             return Response()->json([
                 'status' => $usuario->getResposta_status(),
