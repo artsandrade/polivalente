@@ -37,7 +37,9 @@
               <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                 <a class="dropdown-item" href="{{route('usuarios_visualizar_get')}}?id={{$usuario->id_usuario}}"><i class="dw dw-eye"></i> Visualizar</a>
                 <a class="dropdown-item" href="{{route('usuarios_alterar_get')}}?id={{$usuario->id_usuario}}"><i class="dw dw-edit2"></i> Alterar</a>
+                @if(session('usuario_id')!=$usuario->id_usuario)
                 <a class="dropdown-item" href="#" onclick="removerModal('{{$usuario->id_usuario}}', '{{$usuario->nome}}')"><i class="dw dw-delete-3"></i> Remover</a>
+                @endif
               </div>
             </div>
           </td>
