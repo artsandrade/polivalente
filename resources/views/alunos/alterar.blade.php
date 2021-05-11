@@ -50,9 +50,9 @@
         <div class="form-group">
           <label for="sexo">Sexo :</label>
           <select class="custom-select form-control" id="sexo" name="sexo">
-            <option value="">-- Selecionar --</option>
-            <option value="feminino">Feminino</option>
-            <option value="masculino">Masculino</option>
+            <option value="" {{$aluno->sexo==''?'selected':''}}>-- Selecionar --</option>
+            <option value="feminino" {{$aluno->sexo=='feminino'?'selected':''}}>Feminino</option>
+            <option value="masculino" {{$aluno->sexo=='masculino'?'selected':''}}>Masculino</option>
           </select>
         </div>
       </div>
@@ -151,7 +151,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="cidade_nascimento_opcoes">Cidade de nascimento :</label>
-          <select class="custom-select form-control" id="cidade_nascimento_opcoes" readonly>
+          <select class="custom-select form-control" id="cidade_nascimento_opcoes" name="cidade_nascimento_opcoes" readonly>
             <option value="">-- Selecionar --</option>
           </select>
           <input type="hidden" id="cidade_nascimento" name="cidade_nascimento" value="{{$aluno->cidade_nascimento}}">
@@ -225,6 +225,45 @@
           <input id="arquivos" name="arquivos[]" type="file" class="file" multiple>
         </div>
       </div>
+    </div>
+    <hr>
+    <h5>Informações do cadastro</h5>
+    <br>
+    <div class="row">
+      @foreach($usuarios as $usuario)
+      @if($usuario->id_usuario==$aluno->usuario_criacao)
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="cadastrado_por">Cadastrado por :</label>
+          <input type="text" id="cadastrado_por" class="form-control" value="{{$usuario->nome}}" disabled>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="data_cadastro">Data do cadastro :</label>
+          <input type="text" id="data_cadastro" class="form-control" value="{{date('d/m/Y H:i:s', strtotime($aluno->data_criacao))}}" disabled>
+        </div>
+      </div>
+      @endif
+      @endforeach
+      @if($aluno->usuario_modificacao!=NULL)
+      @foreach($usuarios as $usuario)
+      @if($usuario->id_usuario==$aluno->usuario_modificacao)
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="alterado_por">Alterado por :</label>
+          <input type="text" id="alterado_por" class="form-control" value="{{$usuario->nome}}" disabled>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="data_alteracao">Data da alteração :</label>
+          <input type="text" id="data_alteracao" class="form-control" value="{{date('d/m/Y H:i:s', strtotime($aluno->data_modificacao))}}" disabled>
+        </div>
+      </div>
+      @endif
+      @endforeach
+      @endif
     </div>
     <small class="form-text text-muted">É necessário que os campos com <b>*</b> sejam preenchidos!</small>
     <div class="row text-right">

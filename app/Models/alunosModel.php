@@ -491,7 +491,7 @@ class alunosModel extends Model
                 foreach ($this->getArquivo()['tmp_name'] as $key => $imagem) {
                     $diretorio = storage_path('arquivos/');
                     $ext = pathinfo($this->getArquivo()['name'][$key], PATHINFO_EXTENSION);
-                    $nome = date('d_m_Y_H_i_s') . $key . $ext;
+                    $nome = date('d_m_Y_H_i_s') . $key . '.' . $ext;
                     $arquivo = $diretorio . $nome;
                     DB::table('alunos_arquivos')->insert([
                         'aluno_id' => $this->getAluno_id(),

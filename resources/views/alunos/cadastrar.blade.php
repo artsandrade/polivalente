@@ -149,10 +149,9 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="cidade_nascimento_opcoes">Cidade de nascimento :</label>
-          <select class="custom-select form-control" id="cidade_nascimento_opcoes" readonly>
+          <select class="custom-select form-control" id="cidade_nascimento_opcoes" name="cidade_nascimento_opcoes" readonly>
             <option value="">-- Selecionar --</option>
           </select>
-          <input type="hidden" id="cidade_nascimento" name="cidade_nascimento">
         </div>
       </div>
     </div>

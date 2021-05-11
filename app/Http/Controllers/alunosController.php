@@ -39,7 +39,7 @@ class alunosController extends Controller
             $aluno->setOrgao_emissor($request->orgao_emissor);
             $aluno->setData_expedicao($request->data_expedicao);
             $aluno->setEstado_nascimento($request->estado_nascimento);
-            $aluno->setCidade_nascimento($request->cidade_nascimento);
+            $aluno->setCidade_nascimento($request->cidade_nascimento_opcoes);
             $aluno->setTelefone($request->telefone);
             $aluno->setCelular($request->celular);
             $aluno->setTelefone_adicional($request->telefone_adicional);
@@ -108,7 +108,7 @@ class alunosController extends Controller
             $aluno->setOrgao_emissor($request->orgao_emissor);
             $aluno->setData_expedicao($request->data_expedicao);
             $aluno->setEstado_nascimento($request->estado_nascimento);
-            $aluno->setCidade_nascimento($request->cidade_nascimento);
+            $aluno->setCidade_nascimento($request->cidade_nascimento_opcoes);
             $aluno->setTelefone($request->telefone);
             $aluno->setCelular($request->celular);
             $aluno->setTelefone_adicional($request->telefone_adicional);

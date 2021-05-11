@@ -86,19 +86,13 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="estado_nascimento">Estado de nascimento :</label>
-        <select class="custom-select form-control" id="estado_nascimento" name="estado_nascimento" disabled>
-          <option value="" {{$aluno->estado_nascimento==''?'selected':''}}>-- Selecionar --</option>
-          <option value="{{$aluno->estado_nascimento}}" {{$aluno->estado_nascimento!=''?'selected':''}}>{{$aluno->estado_nascimento}}</option>
-        </select>
+        <input type="text" class="form-control" id="estado_nascimento" name="estado_nascimento" value="{{$aluno->estado_nascimento}}" disabled>
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <label for="cidade_nascimento_opcoes">Cidade de nascimento :</label>
-        <select class="custom-select form-control" id="cidade_nascimento_opcoes" disabled>
-          <option value="" {{$aluno->cidade_nascimento==''?'selected':''}}>-- Selecionar --</option>
-          <option value="{{$aluno->cidade_nascimento}}" {{$aluno->cidade_nascimento!=''?'selected':''}}>{{$aluno->cidade_nascimento}}</option>
-        </select>
+        <input type="text" class="form-control" id="cidade_nascimento_opcoes" value="{{$aluno->cidade_nascimento}}" disabled>
       </div>
     </div>
   </div>
@@ -160,11 +154,50 @@
     </div>
   </div>
   <hr>
+  <h5>Informações do cadastro</h5>
+  <br>
+  <div class="row">
+    @foreach($usuarios as $usuario)
+    @if($usuario->id_usuario==$aluno->usuario_criacao)
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="cadastrado_por">Cadastrado por :</label>
+        <input type="text" id="cadastrado_por" class="form-control" value="{{$usuario->nome}}" disabled>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="data_cadastro">Data do cadastro :</label>
+        <input type="text" id="data_cadastro" class="form-control" value="{{date('d/m/Y H:i:s', strtotime($aluno->data_criacao))}}" disabled>
+      </div>
+    </div>
+    @endif
+    @endforeach
+    @if($aluno->usuario_modificacao!=NULL)
+    @foreach($usuarios as $usuario)
+    @if($usuario->id_usuario==$aluno->usuario_modificacao)
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="alterado_por">Alterado por :</label>
+        <input type="text" id="alterado_por" class="form-control" value="{{$usuario->nome}}" disabled>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="data_alteracao">Data da alteração :</label>
+        <input type="text" id="data_alteracao" class="form-control" value="{{date('d/m/Y H:i:s', strtotime($aluno->data_modificacao))}}" disabled>
+      </div>
+    </div>
+    @endif
+    @endforeach
+    @endif
+  </div>
+  <hr>
   <h5>Documentos cadastrados</h5>
   <br>
   <div class="row">
     <div class="col-md-12">
-      <table class="data-table table stripe hover nowrap">
+      <table class="data-table table stripe hover nowrap" id="tabela">
         <thead>
           <tr>
             <th class="table-plus datatable-nosort">Arquivo</th>
@@ -248,6 +281,9 @@
 <script src="{{asset('assets/src/plugins/datatables/js/vfs_fonts.js')}}"></script>
 <!-- Datatable Setting js -->
 <script src="{{asset('assets/vendors/scripts/datatable-setting.js')}}"></script>
+
+<!--Jquery Mask (formatação de campos) -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
 
 <script src="{{asset('assets/js/alunos.js')}}" defer></script>
 @stop

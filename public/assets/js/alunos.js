@@ -6,17 +6,19 @@ if (document.getElementById('arquivos')) {
   });
 }
 
-var $cpf = $("#cpf");
-$cpf.mask('000.000.000-00');
+if (document.getElementById('cpf')) {
+  var $cpf = $("#cpf");
+  $cpf.mask('000.000.000-00');
 
-var $telefone = $("#telefone");
-$telefone.mask('(00) 0000-0000');
+  var $telefone = $("#telefone");
+  $telefone.mask('(00) 0000-0000');
 
-var $celular = $("#celular");
-$celular.mask('(00) 00000-0000');
+  var $celular = $("#celular");
+  $celular.mask('(00) 00000-0000');
 
-var $telefone_adicional = $("#telefone_adicional");
-$telefone_adicional.mask('(00) 0000-0000');
+  var $telefone_adicional = $("#telefone_adicional");
+  $telefone_adicional.mask('(00) 0000-0000');
+}
 
 /* Preenchimento da lista de cidade (naturalidade) com base na UF (API IBGE) */
 $("select[name='estado_nascimento']").change(function () {
@@ -37,7 +39,7 @@ $("select[name='estado_nascimento']").change(function () {
   }
 });
 
-if (document.getElementById('estado_nascimento')) {
+if (document.getElementById('estado_nascimento') && document.getElementById('cidade_nascimento')) {
   var estado = document.getElementById('estado_nascimento');
   var opt_estado = estado.value;
   var opt_cidade = document.getElementById('cidade_nascimento').value;
@@ -47,14 +49,11 @@ if (document.getElementById('estado_nascimento')) {
     }, function (json) {
       var options = '<option value="">-– Selecionar -–</option>';
       for (var i = 0; i < json.length; i++) {
-        if (json[i].nome == opt_cidade) {
-          options += '<option data-value="' + json[i].nome + '" value="' + json[i].nome + '" selected>' + json[i].nome + '</option>';
-        }
-        else {
-          options += '<option data-value="' + json[i].nome + '" value="' + json[i].nome + '" >' + json[i].nome + '</option>';
-        }
+        options += '<option data-value="' + json[i].nome + '" value="' + json[i].nome + '" >' + json[i].nome + '</option>';
       }
       $("select[id='cidade_nascimento_opcoes']").html(options);
+      document.getElementById('cidade_nascimento_opcoes').value = opt_cidade;
+      console.log(opt_cidade)
     });
     document.getElementById('cidade_nascimento_opcoes').removeAttribute('readonly');
   } else {

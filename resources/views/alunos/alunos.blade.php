@@ -55,6 +55,8 @@
 @section('importacao_css')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/src/plugins/datatables/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/src/plugins/datatables/css/responsive.bootstrap4.min.css')}}">
+
+<link rel="stylesheet" type="text/css" href="{{asset('assets/src/plugins/sweetalert2/sweetalert2.css')}}">
 @stop
 
 @section('importacao_js')
@@ -72,6 +74,8 @@
 <script src="{{asset('assets/src/plugins/datatables/js/vfs_fonts.js')}}"></script>
 <!-- Datatable Setting js -->
 <script src="{{asset('assets/vendors/scripts/datatable-setting.js')}}"></script>
+
+<script src="{{asset('assets/src/plugins/sweetalert2/sweetalert2.all.js')}}"></script>
 
 <script src="{{asset('assets/js/alunos.js')}}" defer></script>
 @stop
